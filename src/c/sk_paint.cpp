@@ -171,3 +171,42 @@ void sk_paint_set_xfermode_mode(sk_paint_t* paint, sk_xfermode_mode_t mode) {
     }
     AsPaint(paint)->setBlendMode(skmode);
 }
+
+void sk_paint_set_dither(sk_paint_t *cpaint, bool dither) {
+  AsPaint(cpaint)->setAntiAlias(dither);
+}
+
+bool sk_paint_is_dither(sk_paint_t *cpaint) {
+  return AsPaint(cpaint)->isAntiAlias();
+}
+
+void sk_paint_set_text_size(sk_paint_t *cpaint, float size) {
+  AsPaint(cpaint)->setTextSize(size);
+}
+
+float sk_paint_get_text_size(sk_paint_t *cpaint) {
+  return AsPaint(cpaint)->getTextSize();
+}
+
+void sk_paint_set_typeface(sk_paint_t *cpaint, sk_typeface_t *ctypeface) {
+  AsPaint(cpaint)->setTypeface(sk_ref_sp(AsTypeface(ctypeface)));
+}
+
+float sk_paint_get_font_metrics(sk_paint_t *cpaint,
+                                sk_font_metrics_t *cmetrics) {
+  return AsPaint(cpaint)->getFontMetrics(AsFontMetrics(cmetrics));
+}
+
+float sk_paint_measure_text(sk_paint_t *cpaint, const void *text, size_t length,
+                            sk_rect_t *bounds) {
+  return AsPaint(cpaint)->measureText(text, length, AsRect(bounds));
+}
+
+void sk_paint_set_text_encoding(sk_paint_t *cpaint,
+                                sk_text_encoding_t encoding) {
+  AsPaint(cpaint)->setTextEncoding(AsTextEncoding(encoding));
+}
+
+sk_text_encoding_t sk_paint_get_text_encoding(sk_paint_t *cpaint) {
+  return ToTextEncoding(AsPaint(cpaint)->getTextEncoding());
+}

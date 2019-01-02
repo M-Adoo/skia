@@ -217,6 +217,16 @@ typedef struct sk_shader_t sk_shader_t;
 */
 typedef struct sk_surface_t sk_surface_t;
 
+/**
+    The sk_typeface_t class specifies the typeface and intrinsic style of a font.
+    This is used in the paint, along with optionally algorithmic settings like
+    textSize, textSkewX, textScaleX, kFakeBoldText_Mask, to specify
+    how text appears when drawn (and measured).
+
+    Typeface objects are immutable, and so they can be shared between threads.
+ */
+typedef struct sk_typeface_t sk_typeface_t;
+
 typedef enum {
     CLEAR_SK_XFERMODE_MODE,
     SRC_SK_XFERMODE_MODE,
@@ -249,6 +259,39 @@ typedef enum {
     LUMINOSITY_SK_XFERMODE_MODE,
 } sk_xfermode_mode_t;
 
+
+typedef enum {
+    kUTF8,      //!< uses bytes to represent UTF-8 or ASCII
+    kUTF16,     //!< uses two byte words to represent most of Unicode
+    kUTF32,     //!< uses four byte words to represent all of Unicode
+    kGlyphID,   //!< uses two byte words to represent glyph indices
+} sk_text_encoding_t;
+
+typedef float SkScalar;
+/** \enum sk_font_metrics_t
+     sk_font_metrics_t are set in fFlags when underline and strikeout metrics are valid;
+     the underline or strikeout metric may be valid and zero.
+     Fonts with embedded bitmaps may not have valid underline or strikeout metrics.
+     */
+    // Font metrics
+typedef struct {
+    uint32_t fFlags;              //!< is set to FontMetricsFlags when metrics are valid
+    SkScalar fTop;                //!< extent above baseline
+    SkScalar fAscent;             //!< distance to reserve above baseline
+    SkScalar fDescent;            //!< distance to reserve below baseline
+    SkScalar fBottom;             //!< extent below baseline
+    SkScalar fLeading;            //!< distance to add between lines
+    SkScalar fAvgCharWidth;       //!< average character width
+    SkScalar fMaxCharWidth;       //!< maximum character width
+    SkScalar fXMin;               //!< minimum x
+    SkScalar fXMax;               //!< maximum x
+    SkScalar fXHeight;            //!< height of lower-case 'x'
+    SkScalar fCapHeight;          //!< height of an upper-case letter
+    SkScalar fUnderlineThickness; //!< underline thickness
+    SkScalar fUnderlinePosition;  //!< underline position relative to baseline
+    SkScalar fStrikeoutThickness; //!< strikeout thickness
+    SkScalar fStrikeoutPosition;  //!< strikeout position relative to baseline
+} sk_font_metrics_t;
 //////////////////////////////////////////////////////////////////////////////////////////
 
 SK_C_PLUS_PLUS_END_GUARD

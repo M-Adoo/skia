@@ -333,6 +333,10 @@ void sk_canvas_draw_picture(sk_canvas_t* ccanvas, const sk_picture_t* cpicture,
     AsCanvas(ccanvas)->drawPicture(AsPicture(cpicture), matrixPtr, AsPaint(cpaint));
 }
 
+void sk_canvas_draw_text(sk_canvas_t* ccanvas, const void* text, size_t length, float x, float y, const sk_paint_t* cpaint) {
+    AsCanvas(ccanvas)->drawText(text, length, x, y, AsPaint(*cpaint));
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 sk_surface_t* sk_surface_new_raster(const sk_imageinfo_t* cinfo,
